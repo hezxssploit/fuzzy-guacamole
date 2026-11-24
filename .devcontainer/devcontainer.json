@@ -1,0 +1,17 @@
+{
+  "name": "R34PER Agent",
+  "build": { "dockerfile": "../Dockerfile" },
+  "remoteUser": "root",
+  "runArgs": ["--cap-add=NET_RAW", "--cap-add=NET_ADMIN"],
+  "workspaceMount": "",
+  "workspaceFolder": "/app",
+  "forwardPorts": [8000, 6080],
+  "portsAttributes": {
+    "8000": { "label": "Chat UI", "onAutoForward": "openBrowser" },
+    "6080": { "label": "noVNC Desktop", "onAutoForward": "silent" }
+  },
+  "customizations": {
+    "vscode": { "extensions": ["ms-python.python"] }
+  },
+  "postCreateCommand": "nohup python3 -m uvicorn server:app --host 0.0.0.0 --port 8000 > /tmp/reaper.log 2>&1 & sleep 2"
+}

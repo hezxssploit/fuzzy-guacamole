@@ -1,0 +1,19 @@
+services:
+  reaper:
+    build: .
+    container_name: reaper-agent
+    ports:
+      - "8000:8000"
+      - "6080:6080"
+    environment:
+      - VENICE_API_KEY=${VENICE_API_KEY}
+      - VENICE_MODEL=${VENICE_MODEL:-venice-uncensored}
+      - VENICE_BASE_URL=${VENICE_BASE_URL:-https://api.venice.ai/api/v1}
+    volumes:
+      - agent_home:/workspace/agent_home
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+
+volumes:
+  agent_home:
